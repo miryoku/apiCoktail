@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#random{
+    width: 1000px;
+    height: 1000px;
+}
+
+
+#imgConctail{
+    border-radius: 40%;
+    width:200px;
+    height:267px;
+}

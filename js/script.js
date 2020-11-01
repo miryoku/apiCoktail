@@ -1,8 +1,5 @@
 call("https://www.thecocktaildb.com/api/json/v1/1/random.php",affichage);
 
-
-
-
 function call(adresse,callback){
 
     fetch(adresse)
@@ -24,37 +21,41 @@ function affichage(data){
     console.log(json)
     addDomText(json.strDrink,'random','h1')
     addDomSrc(json.strDrinkThumb,'random','img','id','imgConctail')
-    addDom('random','table','id','tableConctail')
-    addDom('tableConctail','thead')
-    addDom('tableConctail','tr','id','trThead')
-    addDomText('Ingredient','trThead','td')
-    addDomText('Measure','trThead','td')
-    addDom('tableConctail','tbody')
-    addDom('tableConctail','tr','id','trBody')
-    addDomText('nique toi','trBody','td')
-    addDomText('nique moi','trBody','td')
 
-
-
+    let info=["Ingredient","Measure",json.strIngredient1,json.strMeasure1,json.strIngredient2,json.strMeasure2,json.strIngredient3,json.strMeasure3,
+        json.strIngredient4,json.strMeasure4,json.strIngredient5,json.strMeasure5,json.strIngredient6,json.strMeasure6,
+        json.strIngredient7,json.strMeasure7,json.strIngredient8,json.strMeasure8,json.strIngredient9,json.strMeasure9]
+    addTable(info,'random',2)
+    addDomText(json.strInstructions,'random','p')
 }
 
-/*
-<table>
-  <thead>
-    <tr>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-    <tr>
-    </tr>
-  </tbody>
-</table>*/
+function addTable(data,whereAdd,nbCologne,idOrClass=null,nameIdOrClass=null){
+    let div=document.getElementById(whereAdd);
+    let element=document.createElement('table');
+    choiseIdOrClass(element,idOrClass,nameIdOrClass)
+    let j=0;
+    let debut="<thead><tr>"
+    let th=""
+    for(i=0;i<nbCologne;i++){
+        th=th+" <th>"+data[j]+"</th>"
+        j++;
+    }            
+    milieu="</tr></thead><tbody>"
+    let td=""
+    while(data[j]!=null){
+        td=td+"<tr>"
+        for(i=0;i<nbCologne;i++){
+            td=td+" <td>"+data[j]+"</td>"
+            j++;
+        }   
+        td=td+"</tr>"
+    } 
+    let fin="</tbody><table>"
+    element.innerHTML=debut+th+milieu+td+fin
+    div.appendChild(element)
+}
+
+
 
 
 function addDom(whereAdd,typeBalise,idOrClass =null ,nameIdOrClass = null){

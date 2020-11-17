@@ -14,6 +14,7 @@ let glassesSelectionCoktail=document.querySelector("#glasses3")
 let alcoholic=document.querySelector("#alcoholic")
 let alcoholicSelectionMenu=document.querySelector("#alcoholic2")
 let alcoholicSelectionCoktail=document.querySelector("#alcoholic3")
+
 const args=[coktail,menu,menu2,menu3,glasses2,glasses3,alcoholic2,alcoholic3]
 
 call("https://www.thecocktaildb.com/api/json/v1/1/random.php",affichage);
@@ -32,8 +33,7 @@ ingredient.addEventListener("click", () => {
 })
 menu.addEventListener('click',(e)=>{
     e.preventDefault()
-    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?i="+e.path[0].innerText,modal)
-
+    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?i="+e.srcElement.innerText,modal)
 })
 
 categories.addEventListener("click", () => {    
@@ -43,13 +43,13 @@ categories.addEventListener("click", () => {
 categoriesSelectionMenu.addEventListener('click',(e)=>{
     e.preventDefault()
     hideBalise(args,menu3)
-    call("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c="+e.path[0].innerText,listCategoriesMenu)
+    call("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c="+e.srcElement.innerText,listCategoriesMenu)
 
 })
 CategoriesSelectionCoktail.addEventListener('click',(e)=>{
     e.preventDefault()
     hideBalise(args,coktail)
-    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+e.path[1].href,affichage)
+    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+e.srcElement.parentElement.textContent,affichage)
 })
 
 glasses.addEventListener("click",()=>{
@@ -60,13 +60,13 @@ glasses.addEventListener("click",()=>{
 glassesSelectionMenu.addEventListener("click",(e)=>{
     e.preventDefault()
     hideBalise(args,glasses3);
-    call("https://www.thecocktaildb.com/api/json/v1/1/filter.php?g="+e.path[0].innerText,listGlassesMenu)
+    call("https://www.thecocktaildb.com/api/json/v1/1/filter.php?g="+e.srcElement.innerText,listGlassesMenu)
 })
 
 glassesSelectionCoktail.addEventListener("click",(e)=>{
     e.preventDefault()
     hideBalise(args,coktail)
-    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+e.path[1].href,affichage)
+    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+e.srcElement.parentElement.textContent,affichage)
 })
 
 alcoholic.addEventListener("click",()=>{
@@ -76,14 +76,16 @@ alcoholic.addEventListener("click",()=>{
 
 alcoholicSelectionMenu.addEventListener("click",(e)=>{
     e.preventDefault()
+
     hideBalise(args,alcoholic3);
-    call("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a="+e.path[0].innerText,listAlcoholicMenu)
+    call("https://www.thecocktaildb.com/api/json/v1/1/filter.php?a="+e.srcElement.innerText,listAlcoholicMenu)
 })
 
 alcoholicSelectionCoktail.addEventListener("click",(e)=>{
     e.preventDefault()
+    console.log(e)
     hideBalise(args,coktail)
-    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+e.path[1].href,affichage)
+    call("https://www.thecocktaildb.com/api/json/v1/1/search.php?s="+e.srcElement.parentElement.textContent,affichage)
 })
 
 
@@ -105,7 +107,6 @@ function affichage(data){
 
 
 function listForModal(data){
-    
     const json=data.drinks
     menu.innerHTML=""
     addDom('#menu','div','id','list')
@@ -117,7 +118,10 @@ function listForModal(data){
         ajout.setAttribute("data-toggle","modal")
         ajout.setAttribute("data-target","#exampleModal")
         ajout.setAttribute("class","text-center font-weight-bold btn btn-light")
-        addDomText(element.strIngredient1,"#element"+i,"p")
+        addDom("#element"+i,"div","class","container container"+i)
+        addDom(".container"+i,"div","class","row row"+i)
+        addDomSrc("https://www.thecocktaildb.com/images/ingredients/"+element.strIngredient1+"-Small.png",".row"+i,'img')  
+        addDomText(element.strIngredient1,".row"+i,"p")
         i++
     });
 }
